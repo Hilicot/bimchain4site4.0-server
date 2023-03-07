@@ -1,0 +1,19 @@
+{
+  "name": "bimchain4site4.0-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hilicot/bimchain4site4.0-server.git"
+  },
+  "author": "Marco Porro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hilicot/bimchain4site4.0-server/issues"
+  },
+  "homepage": "https://github.com/Hilicot/bimchain4site4.0-server#readme"
+}
