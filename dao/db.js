@@ -2,12 +2,11 @@
 
 const sqlite = require('sqlite3');
 
-let db = null;
-
-exports.loadDB = async () => {
-    db = await new sqlite.Database('./dao/users.sqlite', err => {
+const db = new sqlite.Database('./dao/users.sqlite', err => {
         if (err) reject(err);
     });
+
+exports.createDBifNotExists = async () => {
     // create tables if they don't exist
     db.serialize(() => {
         db.run('CREATE TABLE IF NOT EXISTS users (address TEXT PRIMARY KEY, name TEXT, surname TEXT, email TEXT)');
@@ -16,4 +15,4 @@ exports.loadDB = async () => {
     });
 }
 
-exports.getDBsync = () => {return db};
+exports.db = db

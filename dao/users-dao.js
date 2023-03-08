@@ -1,24 +1,45 @@
 'use strict';
 
-const { getDBsync } = require('./db');
-const db = getDBsync();
+const { db } = require('./db');
 
-exports.getUserByAddress = async(address) => {
-        const row = await db.get('SELECT * FROM users WHERE address = ?', [address])
-        if (row === undefined)
-            return {error: "User not found"};
-        else
-            return { address: row.address, name: row.name, surname:row.surname, email: row.email };
+exports.getAllUsers = () => {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT * FROM users', (err, rows) => {
+            if (rows === undefined)
+                reject({ message: "No users found" });
+            else
+                resolve(rows);
+        });
+    });
 };
 
-exports.registerUser = async (address, name, surname, email) => {
-        const row = await db.get('SELECT * FROM users WHERE address = ?', [address])
-        if (row !== undefined)
-            return {error: "User already registered"};
-        else {
-            await db.run('INSERT INTO users (address, name, surname, email) VALUES (?, ?, ?, ?)', [address, name, surname, email]);
-            return { address: address, name: name, surname: surname, email: email };
-        }
+
+exports.getUserByAddress = (address) => {
+    return new Promise((resolve, reject) => {
+        db.get('SELECT * FROM users WHERE address = ?', [address], (err, row) => {
+            if (row === undefined)
+
+                reject({ message: "User not found" });
+            else
+                resolve({ address: row.address, name: row.name, surname: row.surname, email: row.email });
+        });
+    });
 };
 
+exports.registerUser = (address, name, surname, email) => {
+    return new Promise((resolve, reject) => {
+        db.get('SELECT * FROM users WHERE address = ?', [address], (err, row) => {
+            if (row !== undefined)
+                reject({ message: "User already registered" });
+            else {
+                db.run('INSERT INTO users (address, name, surname, email) VALUES (?, ?, ?, ?)', [address, name, surname, email], (err) => {
+                    if (err !== null)
+                        reject({ message: err.message });
+                    else
+                        resolve({ address: address, name: name, surname: surname, email: email });
+                });
+            }
+        });
+    });
+}
 

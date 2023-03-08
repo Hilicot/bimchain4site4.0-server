@@ -4,14 +4,14 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const usersAPI = require('./api/users-api');
+const { createDBifNotExists } = require('./dao/db');
 
 // init express
 const app = new express();
 const port = 3001;
 
-// load database
-const { loadDB } = require('./dao/db');
-loadDB();
+// make sure database exists
+createDBifNotExists();
 
 // init middlewares
 app.use(morgan('dev'));

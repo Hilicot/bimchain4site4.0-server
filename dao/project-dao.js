@@ -1,7 +1,6 @@
 'use strict';
 
-const { getDBsync } = require('./db');
-const db = getDBsync();
+const { db } = require('./db');
 
 exports.getUserProjects = async (address) => {
         const rows = await db.all('SELECT * FROM projects WHERE id IN (SELECT project_id FROM project_users WHERE user_address = ?)', [address]);
