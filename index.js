@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const usersAPI = require('./api/users-api');
+const projectsAPI = require('./api/projects-api');
 const { createDBifNotExists } = require('./dao/db');
 
 // init express
@@ -21,9 +22,12 @@ const corsOptions = {
   credentials: true
 };
 app.use(cors(corsOptions));
+app.use(express.json({ limit: "200mb" })); // allow large payloads
+app.use(express.urlencoded({limit: '200mb', extended: true}));
 
 // register apis
 usersAPI.register(app);
+projectsAPI.register(app);
 
 // activate the server
 app.listen(port, () => {
