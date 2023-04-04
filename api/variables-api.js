@@ -14,7 +14,6 @@ exports.register = (app) => {
 
         try {
             const variables = await variablesDAO.getVariable(project_id, name);
-            console.log(variables)
             res.status(200).json(variables);
         } catch (err) {
             res.status(500).json(err);
