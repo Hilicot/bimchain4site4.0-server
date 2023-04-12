@@ -3,10 +3,11 @@
 const path = require('path');
 const fs = require('fs');
 
-
+// TODO delete?
 exports.readAbi=(name) => {
     return require(path.resolve("database/contracts/"+name));
 }
+
 exports.storeVariable = (name, value) => {
     fs.writeFileSync(path.resolve("database/variables/"+name), value);
 }

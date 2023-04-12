@@ -9,24 +9,24 @@ exports.getUserProjects = (address) => {
             if (rows === undefined)
                 reject({ message: "User not found" });
             else
-                resolve(rows.map(row => { return { id: row.id, name: row.name, description: row.description, abi: readAbi(row.contract_file) } }));
+                resolve(rows.map(row => { return { id: row.id, name: row.name, description: row.description, address: row.address } }));
         });
     });
 };
 
-exports.registerProject = async (name, description) => {
+exports.registerProject = async (name, description, address) => {
     return new Promise((resolve, reject) => {
         //fetch 
         db.get('SELECT * FROM projects WHERE name = ?', [name], (err, row) => {
             if (row !== undefined)
                 reject({ message: "There is already a project with that name!" });
             else {
-                db.run('INSERT INTO projects (name, description, contract_file) VALUES (?, ?, ?)', [name, description, name + ".json"], (err) => {
+                db.run('INSERT INTO projects (name, description, address) VALUES (?, ?, ?)', [name, description, address], (err) => {
                     if (err !== null)
                         reject({ message: err.message });
                     else {
                         db.get('SELECT * FROM projects WHERE name = ?', [name], (err, row) => {
-                            resolve({ id: row.id, name: name, description: description, abi: readAbi(name + ".json") });
+                            resolve({ id: row.id, name: name, description: description, address: address });
                         });
                     }
                 });
@@ -42,6 +42,17 @@ exports.getProjectById = (id) => {
                 reject({ message: "Project not found" });
             else
                 resolve(row);
+        });
+    });
+};
+
+exports.deleteProject = (id) => {
+    return new Promise((resolve, reject) => {
+        db.run('DELETE FROM projects WHERE id = ?', [id], (err) => {
+            if (err !== null)
+                reject({ message: err.message });
+            else
+                resolve({ id: id });
         });
     });
 };
