@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const usersAPI = require('./api/users-api');
 const projectsAPI = require('./api/projects-api');
+const filesAPI = require('./api/files-api');
 const variablesAPI = require('./api/variables-api');
 const { createDBifNotExists } = require('./dao/db');
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded({limit: '200mb', extended: true}));
 // register apis
 usersAPI.register(app);
 projectsAPI.register(app);
+filesAPI.register(app);
 variablesAPI.register(app);
 
 // activate the server

@@ -8,8 +8,10 @@ exports.readAbi=(name) => {
     return require(path.resolve("database/contracts/"+name));
 }
 
-exports.storeVariable = (name, value) => {
-    fs.writeFileSync(path.resolve("database/variables/"+name), value);
+exports.storeVariable = async (name, value) => {
+    await fs.writeFile(path.resolve("database/variables/"+name), value, (err) => {
+        if (err) throw err;
+    });
 }
 
 exports.readVariable = async (name) => {
@@ -20,3 +22,9 @@ exports.readVariable = async (name) => {
         });
     });
 }
+
+exports.deleteVariable = async (name) => {
+    await fs.unlink(path.resolve("database/variables/"+name));
+}
+
+
