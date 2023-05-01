@@ -15,6 +15,8 @@ exports.register = (app) => {
             res.status(500).json(err);
         }
     });
+
+
     // get project of user
     app.get('/api/projects/:address', async (req, res) => {
         const { address } = req.params;
@@ -29,6 +31,28 @@ exports.register = (app) => {
             res.status(500).json(err);
         }
     });
+
+    // get all projects
+    app.get('/api/projects', async (req, res) => {
+        try {
+            const projects = await projectsDAO.getAllProjects();
+            res.status(200).json(projects);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    });
+
+    // get users of project
+    app.get('/api/projects/:id/users', async (req, res) => {
+        const { id } = req.params;
+        try {
+            const users = await projectsDAO.getProjectUsers(id);
+            res.status(200).json(users);
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    });
+
     app.post('/api/projects/registerUser', async (req, res) => {
         const { address, projectId } = req.body;
         try {

@@ -25,6 +25,7 @@ exports.register = (app) => {
             const users = await usersDAO.getAllUsers();
             res.status(200).json(users);
         } catch (err) {
+            console.log(err)
             res.status(500).json(err);
         }
     });
@@ -35,7 +36,7 @@ exports.register = (app) => {
             const user = await usersDAO.getUserByAddress(address);
             res.status(200).json(user);
         } catch (err) {
-            res.status(500).json(err);
+            res.status(200).json(err);
         }
     });
 }

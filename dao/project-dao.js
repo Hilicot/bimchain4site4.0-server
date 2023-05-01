@@ -2,6 +2,17 @@
 
 const { db } = require('./db');
 
+exports.getAllProjects = () => {
+    return new Promise((resolve, reject) => {
+        db.all('SELECT * FROM projects', (err, rows) => {
+            if (rows === undefined)
+                reject({ message: "No projects found" });
+            else
+                resolve(rows.map(row => { return { id: row.id, name: row.name, address: row.address, creator:row.creator } }));
+        });
+    });
+};
+
 exports.getUserProjects = (address) => {
     return new Promise((resolve, reject) => {
         db.all('SELECT * FROM projects WHERE id IN (SELECT project_id FROM project_users WHERE user_address = ?)', [address], (err, rows) => {

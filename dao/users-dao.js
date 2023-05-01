@@ -18,7 +18,6 @@ exports.getUserByAddress = (address) => {
     return new Promise((resolve, reject) => {
         db.get('SELECT * FROM users WHERE address = ?', [address], (err, row) => {
             if (row === undefined)
-
                 reject({ message: "User not found" });
             else
                 resolve({ address: row.address, name: row.name, surname: row.surname, email: row.email });
