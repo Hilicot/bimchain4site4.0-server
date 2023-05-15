@@ -5,8 +5,8 @@ const usersDAO = require('../dao/users-dao');
 exports.register = (app) => {   
     app.post('/api/users/register', async (req, res) => {
         //TODO implement the code verification
-        const { firstName, lastName, email, code, address} = req.body;
-        if(firstName === undefined || lastName === undefined || email === undefined || code === undefined || address === undefined) {
+        const { firstName, lastName, email, address} = req.body;
+        if(firstName === undefined || lastName === undefined || address === undefined) {
             res.status(400).json({message: "Missing parameters"});
             return;
         }
