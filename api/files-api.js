@@ -2,12 +2,12 @@
 
 const filesDAO = require('../dao/files-dao');
 
-exports.register = (app, upload) => {   
+exports.register = (app, upload) => {
     // get all files of a project
     app.get('/api/files/:project_id', async (req, res) => {
         const project_id = req.params.project_id;
         const files = await filesDAO.getProjectFiles(project_id);
-        res.json({data:files});
+        res.json({ data: files });
     });
 
     // get a specific file of a project
@@ -15,9 +15,13 @@ exports.register = (app, upload) => {
         const project_id = req.params.project_id;
         const name = req.params.name;
         const version = req.params.version;
+        try{
         const file = await filesDAO.getProjectFile(project_id, name, version);
-        
         res.json({data:file});
+        }catch(err){
+            console.log(err);
+            res.json({data:""});
+        }       
     });
 
     // store a file of a project
@@ -27,7 +31,7 @@ exports.register = (app, upload) => {
         const version = req.body.version;
         const data = req.body.data;
         const file = await filesDAO.storeProjectFile(project_id, name, version, data);
-        res.json({data:"done"});
+        res.json({ data: "done" });
     });
 
 }
