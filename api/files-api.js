@@ -2,6 +2,20 @@
 
 const filesDAO = require('../dao/files-dao');
 
+/**
+ * @module files-api
+ * @description Provides REST API endpoints for managing files.
+ * @param {Object} app - The express application instance.
+ * 
+ * API:
+ * GET /api/files/:project_id
+ *  - returns all files of a project
+ * GET /api/files/:project_id/:name/:version
+ * - returns a specific file of a project, given its name and version
+ * POST /api/files
+ * - stores a file of a project
+*/
+
 exports.register = (app, upload) => {
     // get all files of a project
     app.get('/api/files/:project_id', async (req, res) => {

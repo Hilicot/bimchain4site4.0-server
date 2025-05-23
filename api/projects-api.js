@@ -2,6 +2,26 @@
 
 const projectsDAO = require('../dao/project-dao');
 
+/**
+ * @module projects-api
+ * @description Provides REST API endpoints for managing projects.
+ * @param {Object} app - The express application instance.
+ * 
+ * API:
+ * GET /api/projects/:address
+ * - returns all projects of a user
+ * GET /api/projects
+ * - returns all projects
+ * GET /api/projects/:id/users
+ * - returns all users of a project
+ * POST /api/projects
+ * - registers a new project
+ * POST /api/projects/registerUser
+ * - registers a user to a project
+ * DELETE /api/projects/:id
+ * - deletes a project
+ */
+
 exports.register = (app) => {   
     // register new project. Returns the compiled contract file (to be deployed on the blockchain)
     app.post('/api/projects', async (req, res) => {

@@ -3,6 +3,20 @@
 const projectsDAO = require('../dao/project-dao');
 const variablesDAO = require('../dao/variables-dao');
 
+/**
+ * @module variables-api
+ * @description Provides REST API endpoints for managing variables.
+ * @param {Object} app - The express application instance.
+ * 
+ * API:
+ * GET /api/variables/:project_id/:name
+ * - returns a variable given its name
+ * POST /api/variables
+ * - saves a variable
+ * DELETE /api/variables/:project_id/:name
+ * - deletes a variable
+ */
+
 exports.register = (app) => {
     // get variable
     app.get('/api/variables/:project_id/:name', async (req, res) => {
